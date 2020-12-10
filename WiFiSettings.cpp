@@ -392,7 +392,13 @@ void WiFiSettingsClass::portal() {
     }
 }
 
-bool WiFiSettingsClass::connect(bool portal, int wait_seconds) {
+bool WiFiSettingsClass::clearWiFiSettings(){
+    bool success = spurt("/wifi-ssid", "");
+    return success & spurt("/wifi-password","");
+}
+
+bool WiFiSettingsClass::connect(bool portal, int wait_seconds, String hostname) {
+    this->hostname = hostname;
     begin();
 
     WiFi.mode(WIFI_STA);
@@ -465,11 +471,6 @@ void WiFiSettingsClass::begin() {
 }
 
 WiFiSettingsClass::WiFiSettingsClass() {
-    #ifdef ESP32
-        hostname = F("esp32-");
-    #else
-        hostname = F("esp8266-");
-    #endif
 }
 
 WiFiSettingsClass WiFiSettings;
