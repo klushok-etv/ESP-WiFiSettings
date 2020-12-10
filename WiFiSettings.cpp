@@ -264,12 +264,12 @@ void WiFiSettingsClass::portal() {
             "<meta name=viewport content='width=device-width,initial-scale=1'>"
             "<style>"
             "*{box-sizing:border-box} "
-            "html{background:#444;font:10pt sans-serif}"
+            "html{background-color:#444;font:10pt sans-serif}"
             "body{background:#ccc;color:black;max-width:30em;padding:1em;margin:1em auto}"
             "a:link{color:#000} "
             "label{clear:both}"
-            "select,input:not([type^=c]){display:block;width:100%;border:1px solid #444;padding:.3ex}"
-            "input[type^=s]{display:inline;width:auto;background:#de1;padding:1ex;border:1px solid #000;border-radius:1ex}"
+            "select,input:not([type^=c]){display:block;width:100%;border:1px solid #444;border-radius: 4px;padding: 8px;}"
+            "input[type^=s]{display:inline;width:50%;background:#de1;padding:1ex;border:1px solid #000;border-radius:1ex}"
             "[type^=c]{float:left;margin-left:-1.5em}"
             ":not([type^=s]):focus{outline:2px solid #d1ed1e}"
             ".w::before{content:'\\26a0\\fe0f'}"
@@ -324,8 +324,13 @@ void WiFiSettingsClass::portal() {
 
         http.sendContent(F("</select></label> "
                 "<a href=/rescan onclick=\"this.innerHTML='scanning...';\">rescan</a>"
-                "<p><label>WiFi WEP/WPA password:<br>"
-                "<input name=password value='"
+                "<p style='position:relative'><label>WiFi WEP/WPA password:<br>"
+                "<span style='font-size:18pt; position:absolute; right:5px; z-index:99;' "
+                "onclick='const pwin = document.getElementById(\"pw-input\");"
+                "const type = pwin.getAttribute(\"type\") === \"password\" ? \"text\" : \"password\";" 
+                "pwin.setAttribute(\"type\", type);'"
+                ">&#128065</span>"
+                "<input id='pw-input' autocomplete='off' name=password type='password' value='"
         ));
         if (slurp("/wifi-password").length()) http.sendContent("##**##**##**");
         http.sendContent(F("'></label><hr>"));
@@ -335,7 +340,7 @@ void WiFiSettingsClass::portal() {
         }
 
         http.sendContent(F(
-            "<p style='position:sticky;bottom:0;text-align:right'>"
+            "<p style='position:sticky;bottom:0;text-align:center'>"
             "<input type=submit value=Save style='font-size:150%'></form>"
         ));
     });
