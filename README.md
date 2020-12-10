@@ -18,6 +18,7 @@
       * [Reference](#reference)
          * [Functions](#functions)
             * [WiFiSettings.connect([...])](#wifisettingsconnect)
+            * [WiFiSettings.clearWiFiSettings()](#WiFiSettingsclearWiFiSettings)
             * [WiFiSettings.portal()](#wifisettingsportal)
             * [WiFiSettings.integer(...)](#wifisettingsinteger)
             * [WiFiSettings.string(...)](#wifisettingsstring)
@@ -137,7 +138,7 @@ designed to be inherited from (subclassed), or to have multiple instances.
 #### WiFiSettings.connect([...])
 
 ```C++
-bool connect(bool portal = true, int wait_seconds = 30);
+bool connect(bool portal = true, int wait_seconds = 30, String hostname = "ESP32-");
 ```
 
 If no WiFi network is configured yet, starts the configuration portal.
@@ -158,6 +159,16 @@ Calls the following callbacks:
 * WiFiSettings.onWaitLoop -> int (milliseconds to wait)
 * WiFiSettings.onSuccess
 * WiFiSettings.onFailure
+
+#### WiFiSettings.ClearWiFiSettings()
+
+```C++
+bool clearWiFiSettings();
+```
+
+Clears previously stored wifi credentials.
+
+Returns `true` if succesfull, `false` if not.
 
 #### WiFiSettings.portal()
 
