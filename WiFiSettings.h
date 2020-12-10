@@ -11,7 +11,16 @@ class WiFiSettingsClass {
 
         WiFiSettingsClass();
         void begin();
-        bool connect(bool portal = true, int wait_seconds = 30);
+        bool connect(
+            bool portal = true, 
+            int wait_seconds = 30,  
+            #ifdef ESP32
+                String hostname = "esp32-"
+            #else
+                String hostname = "esp8266-"
+            #endif 
+        );
+        bool clearWiFiSettings();
         void portal();
         String string(const String& name, const String& init = "", const String& label = "");
         String string(const String& name, unsigned int max_length, const String& init = "", const String& label = "");
@@ -24,6 +33,7 @@ class WiFiSettingsClass {
         void warning(const String& contents, bool escape = true);
         void info(const String& contents, bool escape = true);
 
+        
         String hostname;
         String password;
         bool secure;
